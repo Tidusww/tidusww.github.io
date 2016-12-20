@@ -88,15 +88,15 @@
 1、绝对时间绝对时间是指那些以固定时间为参考系的时间戳。
 常用的有Foundation框架中的[[NSDate date] timeIntervalSinceReferenceDate];以及CoreFoun">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TidusWW">
+<meta property="og:title" content="iOS时间戳杂谈">
 <meta property="og:url" content="http://yoursite.com/2016/12/20/iOS时间戳杂谈/index.html">
 <meta property="og:site_name" content="TidusWW">
 <meta property="og:description" content="前言在iOS中我们经常需要使用到时间戳，但在iOS下获取“时间”的方法有很多。不过总的来说，我们可以在iOS中获取的时间戳主要有两类—-绝对时间与相对时间。下面将总结一下这些方法之间的关系。
 1、绝对时间绝对时间是指那些以固定时间为参考系的时间戳。
 常用的有Foundation框架中的[[NSDate date] timeIntervalSinceReferenceDate];以及CoreFoun">
-<meta property="og:updated_time" content="2016-12-20T06:42:24.000Z">
+<meta property="og:updated_time" content="2016-12-20T06:48:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TidusWW">
+<meta name="twitter:title" content="iOS时间戳杂谈">
 <meta name="twitter:description" content="前言在iOS中我们经常需要使用到时间戳，但在iOS下获取“时间”的方法有很多。不过总的来说，我们可以在iOS中获取的时间戳主要有两类—-绝对时间与相对时间。下面将总结一下这些方法之间的关系。
 1、绝对时间绝对时间是指那些以固定时间为参考系的时间戳。
 常用的有Foundation框架中的[[NSDate date] timeIntervalSinceReferenceDate];以及CoreFoun">
@@ -133,7 +133,7 @@
 
 
 
-  <title>  | TidusWW </title>
+  <title> iOS时间戳杂谈 | TidusWW </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -268,7 +268,7 @@
             
             
               
-                
+                iOS时间戳杂谈
               
             
           </h1>
@@ -322,12 +322,12 @@
 <p>常用的有Foundation框架中的<br><code>[[NSDate date] timeIntervalSinceReferenceDate];</code><br>以及CoreFoundation框架中的<br><code>CFAbsoluteTimeGetCurrent();</code></p>
 <p>上述两种方法是等价的，所参考的起始时间都是世界时间（UTC）2001年1月1日凌晨，所返回的double类型的结果都是从参考时间至今经过的秒数。</p>
 <p>除了刚才提到的参考时间，还有以世界时间（UTC）1970年1月1日凌晨为参考系的<br><code>[[NSDate date] timeIntervalSince1970];</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//打印结果</div><div class="line">NSLog(@&quot;%f&quot;, CFAbsoluteTimeGetCurrent());</div><div class="line">NSLog(@&quot;%f&quot;, [[NSDate date] timeIntervalSinceReferenceDate]);</div><div class="line">NSLog(@&quot;%f&quot;, [[NSDate date] timeIntervalSince1970]);</div><div class="line">2016-11-29 10:50:35.737 TidusWWDemo[192:4266] 502080635.736519  </div><div class="line">2016-11-29 10:50:35.740 TidusWWDemo[192:4266] 502080635.740338</div><div class="line">2016-11-29 10:50:35.740 TidusWWDemo[192:4266] 1480387835.740696</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">NSLog(@&quot;%f&quot;, CFAbsoluteTimeGetCurrent());</div><div class="line">NSLog(@&quot;%f&quot;, [[NSDate date] timeIntervalSinceReferenceDate]);</div><div class="line">NSLog(@&quot;%f&quot;, [[NSDate date] timeIntervalSince1970]);</div><div class="line"></div><div class="line">//打印结果</div><div class="line">2016-11-29 10:50:35.737 TidusWWDemo[192:4266] 502080635.736519  </div><div class="line">2016-11-29 10:50:35.740 TidusWWDemo[192:4266] 502080635.740338</div><div class="line">2016-11-29 10:50:35.740 TidusWWDemo[192:4266] 1480387835.740696</div></pre></td></tr></table></figure>
 <p>由于参考系是固定的，显然每次通过这些方法获取的时间戳都将是不同的。但绝对不变的参考系并不意味着绝对可靠的结果，实际上当用户手动改变了设备上的系统时间后，基于系统时钟的上述方法返回的结果也会一同改变。</p>
 <p>假如我们想获取一种不会被用户手动修改而影响的时间戳，该怎么办？答案是相对时间。</p>
 <h4 id="2、相对时间"><a href="#2、相对时间" class="headerlink" title="2、相对时间"></a>2、相对时间</h4><p>相对时间是指以非固定时间为参考系返回的时间戳</p>
 <p>常用的有Foundation框架中的<br><code>[[NSProcessInfo processInfo] systemUptime];</code><br>和QuartzCore框架中的<br><code>CACurrentMediaTime();</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//打印结果（一台刚重启没多久的设备）</div><div class="line">NSTimeInterval systemUptime = [[NSProcessInfo processInfo] systemUptime];</div><div class="line">CFTimeInterval currentTime = CACurrentMediaTime();</div><div class="line">NSLog(@&quot;%f&quot;, systemUptime);</div><div class="line">NSLog(@&quot;%f&quot;, currentTime);</div><div class="line">2016-11-29 10:50:35.762 TidusWWDemo[192:4266] 487.083420</div><div class="line">2016-11-29 10:50:35.762 TidusWWDemo[192:4266] 487.099180</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">NSTimeInterval systemUptime = [[NSProcessInfo processInfo] systemUptime];</div><div class="line">CFTimeInterval currentTime = CACurrentMediaTime();</div><div class="line">NSLog(@&quot;%f&quot;, systemUptime);</div><div class="line">NSLog(@&quot;%f&quot;, currentTime);</div><div class="line"></div><div class="line">//打印结果（一台刚重启没多久的设备）</div><div class="line">2016-11-29 10:50:35.762 TidusWWDemo[192:4266] 487.083420</div><div class="line">2016-11-29 10:50:35.762 TidusWWDemo[192:4266] 487.099180</div></pre></td></tr></table></figure>
 <p>上面两种方法获取到的都是设备自最近一次启动至今经过的时间戳。<code>CFAbsoluteTimeGetCurrent()</code>方法调用底层的<code>mach_absolute_time()</code>方法后将结果转换成秒返回。该结果是设备自最近一次启动至今经过的时间，不随系统时间改变而改变，但当设备重启后，该方法返回的结果也会重置。</p>
 <h4 id="3、优劣"><a href="#3、优劣" class="headerlink" title="3、优劣"></a>3、优劣</h4><p>两类时间戳都有各自的特点：<br>绝对时间参考固定的时间点返回时间戳但结果会受系统时钟的影响；<br>相对时间在设备不重启的情况下总能正确返回某一时间段内流逝的时间；<br>所以具体要使用哪种方法获取时间戳需要结合不同的需求场景去选择。</p>
 <h4 id="4、NSDate"><a href="#4、NSDate" class="headerlink" title="4、NSDate"></a>4、NSDate</h4><p>获取到了时间戳，也许我们需要利用它来转换为时间并以一定的格式去展示，NSDate转NSString的方法网上有很多，在这里就不再叙述。需要注意的一点是，获取到绝对时间戳是以世界时间（UTC）为准的，NSDate中保存的日期也是以世界时间（UTC）为准的，所以在通过NSDateFormatter转换为NSString的时候一定要注意当前的时区。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">NSTimeInterval intervalSince1970 = [[NSDate date] timeIntervalSince1970];</div><div class="line">NSDate *date = [NSDate dateWithTimeIntervalSince1970:intervalSince1970];</div><div class="line">NSLog(@&quot;date中保存的是UTC时间：%@&quot;, date);</div><div class="line"></div><div class="line">//显示时需要注意时区</div><div class="line">NSDateFormatter *formatter = [[NSDateFormatter alloc] init];</div><div class="line">[formatter setDateFormat:@&quot;yyyy-MM-dd HH:mm:ss z&quot;];</div><div class="line">//设置时区</div><div class="line">[formatter setTimeZone:[NSTimeZone timeZoneWithName:@&quot;zh&quot;]];</div><div class="line">NSString *datestring = [formatter stringFromDate:date];</div><div class="line">NSLog(@&quot;北京所在时区为东八区：%@&quot;, detesting);</div><div class="line"></div><div class="line">//打印结果</div><div class="line">2016-11-30 15:35:40.078 TidusWWDemo[59040:21040031] date中保存的是UTC时间：2016-11-30 07:35:40 +0000</div><div class="line">2016-11-30 15:35:40.079 TidusWWDemo[59040:21040031] 北京所在时区为东八区：2016-11-30 15:35:40 GMT+8</div></pre></td></tr></table></figure></p>
@@ -355,22 +355,6 @@
     <footer class="post-footer">
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/20/hello-world.md111111/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
 
       
@@ -435,7 +419,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">1</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
